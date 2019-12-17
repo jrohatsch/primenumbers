@@ -1,62 +1,57 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import DisplayNumber from './DisplayNumber.js';
-import renderNumbers from './RenderNumber.js';
 
-export default class DashBoard extends React.Component {
-	constructor(){
-		super();
-		this.state = {
-			nArray: []		
-		}
+export default function DashBoard(props) {
+	let initArray = [];
+
+	for (let i = 0; i < props.MAX; ++i) {
+		initArray.push(new DisplayNumber());
 	}
 
-	componentDidMount(){
-		let localArray = this.state.nArray;
-		for(let i=0;i<4999;++i){
-			localArray.push(new DisplayNumber());
-		}
-		this.setState({nArray: localArray});
-	}
+	const [numbers, setNumbers] = useState(initArray);
 
+	function startAnimation() {
+		let copyArray = [...numbers];
 
-	startAnimation(){
-		let localArray = this.state.nArray;
-		
-		localArray.forEach((number,index)=>{
-			if(number.isCrossedOut) return;
-			for(let i=index+1;i<localArray.length;++i){
-				if(localArray[i].value % number.value == 0){
-					localArray[i].isCrossedOut=true;	
-				}
-			}			
+		copyArray.forEach((number, index) => {
+			if (number.isCrossedOut) return;
+
+			for (let i = index + number.value; i < copyArray.length; i += number.value) {
+				copyArray[i].isCrossedOut = true;
+			}
 		});
-		this.setState({nArray: localArray});
-		this.checkPrime();
+		setNumbers(copyArray);
 	}
 
-	checkPrime(){
-		let localArray = this.state.nArray;
-		
-		localArray.forEach((number,index)=>{
-			number.wasRead = true;
+	function resetAnimation() {
+		let copyArray = [...numbers];
+
+		copyArray.forEach((number) => {
+			number.isCrossedOut = false;
 		});
-
-		this.setState({nArray: localArray});
+		setNumbers(copyArray);
 	}
-			
-	render(){
-	return(
-		<div style={{maxWidth: '80vw', marginLeft: '10vw'}}>
+
+	const renderedNumbers = numbers.map((number, index) => (
+		<div key={index} className={number.isCrossedOut ? 'number notPrime' : 'number prime'}>
+			{number.value}
+		</div>));
+
+	return (
+		<div style={{ maxWidth: '80vw', marginLeft: '10vw' }}>
 			<h2>Sieve of Eratosthenes in Realtime JavaScript</h2>
-			<div onClick={()=>this.startAnimation()} className='startButton'>
+			<div onClick={() => startAnimation()} className='startButton Button'>
 				Start
 			</div>
-			
-			{renderNumbers(this.state.nArray)}
-		</div>	
+			<div onClick={() => resetAnimation()} className='resetButton Button'>
+				Reset
+			</div>
+
+			{renderedNumbers}
+		</div>
 	);
-	}
 }
+
 
 
 
