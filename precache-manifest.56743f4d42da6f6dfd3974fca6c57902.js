@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "037a4c4b06fa56feb663b732924549bb",
+    "revision": "9b1d05bd68abaeb129f848a210254be5",
     "url": "/primenumbers/index.html"
   },
   {
-    "revision": "8008ebf3cad50d19dfdf",
-    "url": "/primenumbers/static/css/main.5ed9043f.chunk.css"
+    "revision": "0f1d3337695d5ac9eb19",
+    "url": "/primenumbers/static/css/main.8d387067.chunk.css"
   },
   {
     "revision": "75504b9ec3316729277e",
     "url": "/primenumbers/static/js/2.95c47543.chunk.js"
   },
   {
-    "revision": "8008ebf3cad50d19dfdf",
-    "url": "/primenumbers/static/js/main.af504aad.chunk.js"
+    "revision": "0f1d3337695d5ac9eb19",
+    "url": "/primenumbers/static/js/main.2a19a9dd.chunk.js"
   },
   {
     "revision": "3c00b941c666523c1c31",
