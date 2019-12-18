@@ -20,10 +20,11 @@ h2 {
     float: left;
     font-weight: bold;
     color: black;
+    border: 2.5px white solid;
 }
 
 .notPrime {
-    color: #eeeeee;
+    opacity: 0.33;
 }
 
 .prime {
@@ -60,4 +61,13 @@ h2 {
 
 .Button:active {
     transform: translateY(4px);
+}
+
+.prime:hover {
+    cursor: pointer;
+    border: 2.5px red solid;
+}
+
+.wasClicked {
+    border: 2.5px black solid;
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DisplayNumber from './DisplayNumber.js';
+import DisplayNumber, { renderDisplayNumber } from './DisplayNumber.js';
 
 export default function DashBoard(props) {
 	let initArray = [];
@@ -16,6 +16,8 @@ export default function DashBoard(props) {
 		copyArray.forEach((number, index) => {
 			if (number.isCrossedOut) return;
 
+			copyArray[index].wasClicked = true;
+
 			for (let i = index + number.value; i < copyArray.length; i += number.value) {
 				copyArray[i].isCrossedOut = true;
 			}
@@ -27,19 +29,40 @@ export default function DashBoard(props) {
 		let copyArray = [...numbers];
 
 		copyArray.forEach((number) => {
+			number.wasClicked = false;
 			number.isCrossedOut = false;
 		});
 		setNumbers(copyArray);
 	}
 
-	const renderedNumbers = numbers.map((number, index) => (
-		<div key={index} className={number.isCrossedOut ? 'number notPrime' : 'number prime'}>
-			{number.value}
-		</div>));
+	function crossOutMultiples(number) {
+		let copyArray = [...numbers];
+		let index = number.value - 2;
+
+		copyArray[index].wasClicked = true;
+
+		for (let i = index + number.value; i < copyArray.length; i += number.value) {
+			copyArray[i].isCrossedOut = true;
+		}
+
+		setNumbers(copyArray);
+	}
+
+	const renderedNumbers = [];
+
+	numbers.forEach((number) => {
+		renderedNumbers.push(
+			renderDisplayNumber(number, crossOutMultiples)
+		);
+	});
 
 	return (
 		<div style={{ maxWidth: '80vw', marginLeft: '10vw' }}>
 			<h2>Sieve of Eratosthenes in Realtime JavaScript</h2>
+			<h3>
+				Click on the Numbers to cross out the multiples of it, or press START
+				to do this for all numbers
+			</h3>
 			<div onClick={() => startAnimation()} className='startButton Button'>
 				Start
 			</div>
